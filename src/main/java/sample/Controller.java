@@ -27,11 +27,14 @@ public class Controller {
 
     @FXML
     public void initialize() {
-        setLanguage(Locale.ENGLISH);
 
-        btnEN.setOnAction(e -> setLanguage(Locale.ENGLISH));
-        btnFR.setOnAction(e -> setLanguage(Locale.FRANCE));
-        btnJP.setOnAction(e -> setLanguage(Locale.JAPAN));
+        // ✅ Default language
+        setLanguage(new Locale("en", "US"));
+
+        // ✅ Updated buttons to use correct language+country codes
+        btnEN.setOnAction(e -> setLanguage(new Locale("en", "US")));
+        btnFR.setOnAction(e -> setLanguage(new Locale("fr", "FR")));
+        btnJP.setOnAction(e -> setLanguage(new Locale("ja", "JP")));
         btnIR.setOnAction(e -> setLanguage(new Locale("fa", "IR")));
 
         btnCalculate.setOnAction(e -> calculate());
@@ -39,6 +42,7 @@ public class Controller {
 
     private void setLanguage(Locale locale) {
         try {
+            // ✅ matches src/main/resources/sample/messages_XX_YY.properties
             bundle = ResourceBundle.getBundle("sample.messages", locale);
 
             lblDistance.setText(bundle.getString("distance.label"));
@@ -49,6 +53,7 @@ public class Controller {
 
         } catch (Exception ex) {
             lblResult.setText("Missing language file!");
+            ex.printStackTrace();
         }
     }
 
@@ -62,9 +67,11 @@ public class Controller {
             double totalCost = totalFuel * price;
 
             String msg = bundle.getString("result.label");
-            lblResult.setText(MessageFormat.format(msg,
+            lblResult.setText(MessageFormat.format(
+                    msg,
                     String.format("%.2f", totalFuel),
-                    String.format("%.2f", totalCost)));
+                    String.format("%.2f", totalCost)
+            ));
 
         } catch (Exception ex) {
             lblResult.setText(bundle.getString("invalid.input"));
