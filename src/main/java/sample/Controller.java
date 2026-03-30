@@ -28,10 +28,8 @@ public class Controller {
     @FXML
     public void initialize() {
 
-        // ✅ Default language
         setLanguage(new Locale("en", "US"));
 
-        // ✅ Updated buttons to use correct language+country codes
         btnEN.setOnAction(e -> setLanguage(new Locale("en", "US")));
         btnFR.setOnAction(e -> setLanguage(new Locale("fr", "FR")));
         btnJP.setOnAction(e -> setLanguage(new Locale("ja", "JP")));
@@ -42,7 +40,6 @@ public class Controller {
 
     private void setLanguage(Locale locale) {
         try {
-            // ✅ matches src/main/resources/sample/messages_XX_YY.properties
             bundle = ResourceBundle.getBundle("sample.messages", locale);
 
             lblDistance.setText(bundle.getString("distance.label"));
