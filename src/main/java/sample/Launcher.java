@@ -8,14 +8,16 @@ import javafx.stage.Stage;
 public class Launcher extends Application {
 
     @Override
-    public void start(Stage primaryStage) throws Exception {
+    public void start(Stage stage) throws Exception {
+
         FXMLLoader loader = new FXMLLoader(
-                getClass().getResource("/sample/layout.fxml")
+                Launcher.class.getResource("/fxml/main_view.fxml")
         );
 
         Scene scene = new Scene(loader.load());
-        primaryStage.setTitle("Fuel Cost Calculator");
-        primaryStage.setScene(scene);
-        primaryStage.show();
+
+        stage.setTitle("Fuel Calculator");
+        stage.setScene(scene);
+        stage.show();
     }
 }
