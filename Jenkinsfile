@@ -9,7 +9,7 @@ pipeline {
         PATH = "C:\\Program Files\\Docker\\Docker\\resources\\bin;${env.PATH}"
         JAVA_HOME = 'C:\\Program Files\\Java\\jdk-21'
         SONARQUBE_SERVER = 'SonarQubeServer'
-        SONAR_TOKEN = 'sonarscanner'
+        SONAR_TOKEN = credentials('sonar-token')
         DOCKERHUB_CREDENTIALS_ID = 'Docker-Hub'
         DOCKERHUB_REPO = 'jerepyo/UI_localization'
         DOCKER_IMAGE_TAG = 'latest'
@@ -38,7 +38,6 @@ pipeline {
         -Dsonar.projectName=DevOps-Demo ^
         -Dsonar.sources=src ^
         -Dsonar.java.binaries=target/classes ^
-        -Dsonar.host.url=http://localhost:9000 ^
         -Dsonar.login=%SONAR_TOKEN%
         """
                 }
