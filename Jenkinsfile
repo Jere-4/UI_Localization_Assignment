@@ -11,7 +11,7 @@ pipeline {
         SONARQUBE_SERVER = 'SonarQubeServer'
         SONAR_TOKEN = credentials('sonar-token')
         DOCKERHUB_CREDENTIALS_ID = 'Docker-Hub'
-        DOCKERHUB_REPO = 'jerepyo/UI_localization'
+        DOCKERHUB_REPO = 'jerepyo/ui_localization'
         DOCKER_IMAGE_TAG = 'latest'
     }
 
