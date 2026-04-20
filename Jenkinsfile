@@ -30,20 +30,20 @@ pipeline {
         }
 
         stage('SonarQube Analysis') {
-                    steps {
-                        withSonarQubeEnv('SonarQubeServer') {
-                          bat """
-                            ${tool 'SonarScanner'}\\bin\\sonar-scanner^
-                            -Dsonar.projectKey=devops-demo ^
-                            -Dsonar.sources=src ^
-                            -Dsonar.projectName=DevOps-Demo ^
-                            -Dsonar.host.url=http://localhost:9000 ^
-                            -Dsonar.login=${env.SONAR_TOKEN} ^
-                            -Dsonar.java.binaries=target/classes
-                            """
-                        }
-                    }
+            steps {
+                withSonarQubeEnv('SonarQubeServer') {
+                    bat """@echo on
+        "${tool 'SonarScanner'}\\bin\\sonar-scanner" ^
+        -Dsonar.projectKey=devops-demo ^
+        -Dsonar.projectName=DevOps-Demo ^
+        -Dsonar.sources=src ^
+        -Dsonar.java.binaries=target/classes ^
+        -Dsonar.host.url=http://localhost:9000 ^
+        -Dsonar.login=%SONAR_TOKEN%
+        """
                 }
+            }
+        }
 
         stage('Build Docker Image') {
             steps {
