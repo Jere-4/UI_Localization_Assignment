@@ -7,6 +7,9 @@ pipeline {
 
     environment {
         PATH = "C:\\Program Files\\Docker\\Docker\\resources\\bin;${env.PATH}"
+        JAVA_HOME = 'C:\\Program Files\\Java\\jdk-21'
+        SONARQUBE_SERVER = 'SonarQubeServer'
+        SONAR_TOKEN = 'sonarscanner'
         DOCKERHUB_CREDENTIALS_ID = 'Docker-Hub'
         DOCKERHUB_REPO = 'jerepyo/UI_localization'
         DOCKER_IMAGE_TAG = 'latest'
@@ -26,11 +29,21 @@ pipeline {
             }
         }
 
-        stage('Generate Report') {
-            steps {
-                bat 'mvn jacoco:report'
-            }
-        }
+        stage('SonarQube Analysis') {
+                    steps {
+                        withSonarQubeEnv('SonarQubeServer') {
+                          bat """
+                            ${tool 'SonarScanner'}\\bin\\sonar-scanner^
+                            -Dsonar.projectKey=devops-demo ^
+                            -Dsonar.sources=src ^
+                            -Dsonar.projectName=DevOps-Demo ^
+                            -Dsonar.host.url=http://localhost:9000 ^
+                            -Dsonar.login=${env.SONAR_TOKEN} ^
+                            -Dsonar.java.binaries=target/classes
+                            """
+                        }
+                    }
+                }
 
         stage('Build Docker Image') {
             steps {
